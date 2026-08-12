@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel | Intranet Escolar</title>
+  <link rel="stylesheet" href="../src/styles/index.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-content">
+      <div>
+        <p class="eyebrow">Intranet Escolar</p>
+        <h1>Panel principal</h1>
+      </div>
+      <button id="logoutButton" class="button button-secondary" type="button">Cerrar sesión</button>
+    </div>
+  </header>
+
+  <main class="container section">
+    <section class="dashboard-welcome">
+      <p class="eyebrow">Sesión activa</p>
+      <h2 id="welcomeTitle">Bienvenido</h2>
+      <p id="roleDescription" class="muted"></p>
+    </section>
+
+    <section class="grid grid-3" aria-label="Módulos disponibles">
+      <article class="card module-card" data-roles="administracion">
+        <h3>Gestión de usuarios</h3>
+        <p>Base para crear, editar, listar y desactivar usuarios.</p>
+        <span class="status">Pendiente de implementación</span>
+      </article>
+
+      <article class="card module-card" data-roles="administracion,docente,estudiante">
+        <h3>Módulo académico</h3>
+        <p>Base para calificaciones y/o asistencia según el alcance del equipo.</p>
+        <span class="status">Pendiente de implementación</span>
+      </article>
+
+      <article class="card module-card" data-roles="administracion,docente,estudiante">
+        <h3>Comunicados</h3>
+        <p>Base para publicar y consultar avisos del centro.</p>
+        <span class="status">Pendiente de implementación</span>
+      </article>
+    </section>
+  </main>
+
+  <script src="../src/js/dashboard.js"></script>
+</body>
+</html>
