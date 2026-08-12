@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Prototipo de intranet escolar para una institución pública">
+  <title>Intranet Escolar</title>
+  <link rel="stylesheet" href="../src/styles/index.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-content">
+      <div>
+        <p class="eyebrow">Institución educativa</p>
+        <h1>Intranet Escolar</h1>
+      </div>
+      <nav aria-label="Navegación principal">
+        <a href="#inicio">Inicio</a>
+        <a href="#modulos">Módulos</a>
+        <a href="#acceso">Acceso</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="inicio" class="hero container">
+      <div>
+        <p class="eyebrow">Prototipo académico</p>
+        <h2>Información y servicios internos del centro educativo</h2>
+        <p>
+          Base inicial para que administración, docentes, estudiantes y familias
+          accedan a los módulos de la intranet según su rol.
+        </p>
+        <a class="button" href="#acceso">Ingresar al prototipo</a>
+      </div>
+      <aside class="card" aria-label="Alcance inicial">
+        <h3>Alcance inicial</h3>
+        <ul>
+          <li>Autenticación por roles</li>
+          <li>Gestión de usuarios</li>
+          <li>Módulo académico</li>
+          <li>Tablón de comunicados</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section id="modulos" class="section container">
+      <div class="section-heading">
+        <p class="eyebrow">Módulos</p>
+        <h2>Estructura preparada para continuar el desarrollo</h2>
+      </div>
+      <div class="grid grid-3">
+        <article class="card">
+          <h3>Usuarios</h3>
+          <p>Alta, baja, edición y consulta de personas según permisos.</p>
+        </article>
+        <article class="card">
+          <h3>Académico</h3>
+          <p>Registro y consulta de calificaciones y, si el equipo lo decide, asistencia.</p>
+        </article>
+        <article class="card">
+          <h3>Comunicados</h3>
+          <p>Creación y consulta de avisos oficiales del centro educativo.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="acceso" class="section container">
+      <div class="login-layout">
+        <div>
+          <p class="eyebrow">Acceso</p>
+          <h2>Ingreso por rol</h2>
+          <p class="muted">Este formulario es una maqueta funcional para avanzar luego con autenticación real.</p>
+        </div>
+
+        <form id="loginForm" class="card form-card">
+          <label for="username">Usuario</label>
+          <input id="username" name="username" type="text" autocomplete="username" required>
+
+          <label for="password">Contraseña</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required>
+
+          <label for="role">Rol</label>
+          <select id="role" name="role" required>
+            <option value="">Seleccione un rol</option>
+            <option value="administracion">Administración</option>
+            <option value="docente">Docente</option>
+            <option value="estudiante">Estudiante / Familia</option>
+          </select>
+
+          <button class="button" type="submit">Entrar</button>
+          <p id="loginMessage" class="form-message" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Proyecto final · Intranet Escolar · Base inicial en HTML, CSS, JavaScript y Markdown.</p>
+    </div>
+  </footer>
+
+  <script src="../src/js/index.js"></script>
+</body>
+</html>
