@@ -30,8 +30,8 @@ intranet-escolar-base/
 ├── js/
 │   ├── app.js
 │   └── dashboard.js
-├── assets/
-│   └── img/
+├── img/
+│   
 └── docs/
     ├── arquitectura.md
     ├── requerimientos.md
