@@ -14,7 +14,7 @@ Esta primera versión contiene la estructura inicial en **HTML, CSS y JavaScript
 - [x] Estructura de estilos accesible y adaptable.
 - [x] Archivos Markdown iniciales.
 - [ ] CRUD de usuarios.
-- [ ] Registro y consulta de calificaciones.
+- [x] Registro y consulta de calificaciones.
 - [ ] Gestión completa de comunicados.
 
 ---

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Módulo académico de la Intranet Escolar">
+  <title>Módulo académico | Intranet Escolar</title>
+  <link rel="stylesheet" href="../src/styles/index.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-content">
+      <div>
+        <p class="eyebrow">Intranet Escolar</p>
+        <h1>Módulo académico</h1>
+      </div>
+      <div class="header-actions">
+        <a class="button button-secondary" href="dashboard.html">Volver al panel</a>
+        <button id="logoutButton" class="button" type="button">Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container section">
+    <section class="dashboard-welcome">
+      <p class="eyebrow">Sesión activa</p>
+      <h2 id="academicWelcome">Área académica</h2>
+      <p id="academicRole" class="muted"></p>
+    </section>
+
+    <section class="academic-summary" aria-label="Resumen académico">
+      <article class="card summary-card">
+        <span class="summary-label">Registros</span>
+        <strong id="totalGrades">0</strong>
+      </article>
+      <article class="card summary-card">
+        <span class="summary-label">Materias</span>
+        <strong id="totalSubjects">0</strong>
+      </article>
+      <article class="card summary-card">
+        <span class="summary-label">Promedio visible</span>
+        <strong id="averageGrade">—</strong>
+      </article>
+    </section>
+
+    <section id="gradeManagement" class="section compact-section hidden" aria-labelledby="gradeFormTitle">
+      <div class="section-heading">
+        <p class="eyebrow">Gestión</p>
+        <h2 id="gradeFormTitle">Registrar calificación</h2>
+        <p class="muted">Disponible para administración y docentes en este prototipo.</p>
+      </div>
+
+      <form id="gradeForm" class="card academic-form">
+        <div class="form-field">
+          <label for="studentName">Estudiante</label>
+          <input id="studentName" name="studentName" type="text" maxlength="80" required>
+        </div>
+
+        <div class="form-field">
+          <label for="subject">Materia</label>
+          <input id="subject" name="subject" type="text" maxlength="60" required>
+        </div>
+
+        <div class="form-field">
+          <label for="evaluation">Evaluación</label>
+          <input id="evaluation" name="evaluation" type="text" maxlength="80" placeholder="Ej. Examen 1" required>
+        </div>
+
+        <div class="form-field">
+          <label for="grade">Calificación</label>
+          <input id="grade" name="grade" type="number" min="0" max="100" step="0.01" required>
+        </div>
+
+        <div class="form-field form-field-wide">
+          <label for="observations">Observaciones</label>
+          <textarea id="observations" name="observations" rows="3" maxlength="250" placeholder="Opcional"></textarea>
+        </div>
+
+        <div class="form-actions form-field-wide">
+          <button class="button" type="submit">Guardar calificación</button>
+          <button id="cancelEditButton" class="button button-secondary hidden" type="button">Cancelar edición</button>
+        </div>
+        <p id="gradeMessage" class="form-message form-field-wide" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="section compact-section" aria-labelledby="gradesTitle">
+      <div class="section-heading section-heading-row">
+        <div>
+          <p class="eyebrow">Consulta</p>
+          <h2 id="gradesTitle">Calificaciones</h2>
+          <p id="gradesDescription" class="muted">Consulta de registros académicos disponibles.</p>
+        </div>
+        <div class="filter-control">
+          <label for="subjectFilter">Filtrar por materia</label>
+          <select id="subjectFilter">
+            <option value="">Todas las materias</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-wrapper card">
+        <table class="academic-table">
+          <thead>
+            <tr>
+              <th scope="col">Estudiante</th>
+              <th scope="col">Materia</th>
+              <th scope="col">Evaluación</th>
+              <th scope="col">Nota</th>
+              <th scope="col">Observaciones</th>
+              <th id="actionsHeader" scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="gradesTableBody"></tbody>
+        </table>
+        <p id="emptyGradesMessage" class="empty-state hidden">No hay calificaciones para mostrar.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="../src/js/academico.js"></script>
+</body>
+</html>
