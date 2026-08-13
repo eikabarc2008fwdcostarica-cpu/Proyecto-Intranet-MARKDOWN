@@ -13,9 +13,9 @@ Esta primera versión contiene la estructura inicial en **HTML, CSS y JavaScript
 - [x] Panel principal con módulos visibles según rol.
 - [x] Estructura de estilos accesible y adaptable.
 - [x] Archivos Markdown iniciales.
-- [ ] CRUD de usuarios.
-- [ ] Registro y consulta de calificaciones.
-- [ ] Gestión completa de comunicados.
+- [x] CRUD de usuarios.
+- [x] Registro y consulta de calificaciones.
+- [x] Gestión completa de comunicados.
 
 ---
 
@@ -23,22 +23,28 @@ Esta primera versión contiene la estructura inicial en **HTML, CSS y JavaScript
 
 ```text
 intranet-escolar-base/
-├── index.html
-├── dashboard.html
-├── css/
-│   └── styles.css
-├── js/
-│   ├── app.js
-│   └── dashboard.js
-├── img/
-│   
-└── docs/
-    ├── arquitectura.md
-    ├── requerimientos.md
-    ├── README.md
-    ├── CONTRIBUTING.md
-    ├── CHANGELOG.md
-    └── AGENTS.md
+├── docs/
+│   ├── AGENTS.md
+│   ├── CHANGELOG.md
+│   ├── CONTRIBUTING.md
+│   ├── README.md
+│   ├── arquitectura.md
+│   ├── gestion_de_usuarios.md
+│   └── requerimientos.md
+├── pages/
+│   ├── academico.html
+│   ├── dashboard.html
+│   ├── index.html
+│   └── usuarios.html
+└── src/
+    ├── js/
+    │   ├── academico.js
+    │   ├── dashboard.js
+    │   ├── index.js
+    │   └── usuarios.js
+    └── styles/
+        ├── index.css
+        └── usuarios.css
 ```
 
 ## Ejecución
@@ -51,7 +57,6 @@ No requiere instalación en esta etapa.
 4. Seleccionar un rol.
 5. Acceder al panel de demostración.
 
-> **Importante:** el inicio de sesión actual es solo una maqueta del frontend. No debe utilizarse como autenticación real.
 
 ## Ejemplo de uso
 
@@ -59,12 +64,11 @@ Un docente puede ingresar con el rol **Docente** y visualizar los módulos acad�
 
 ## Próximos pasos
 
-1. Definir el backend y la base de datos.
-2. Implementar autenticación segura por roles.
-3. Desarrollar la gestión de usuarios.
-4. Implementar el módulo de calificaciones.
-5. Implementar el tablón de comunicados.
-6. Integrar y probar los módulos.
+1. Implementar autenticación segura por roles.
+2. Desarrollar la gestión de usuarios.
+3. Implementar el módulo de calificaciones.
+4. Implementar el tablón de comunicados.
+5. Integrar y probar los módulos.
 
 ## Licencia
 
