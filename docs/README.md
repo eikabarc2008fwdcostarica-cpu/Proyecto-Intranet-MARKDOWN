@@ -17,6 +17,7 @@ Esta primera versión contiene la estructura inicial en **HTML, CSS y JavaScript
 - [x] Registro y consulta de calificaciones.
 - [x] Gestión completa de comunicados.
 
+
 ---
 
 ## Estructura del proyecto
