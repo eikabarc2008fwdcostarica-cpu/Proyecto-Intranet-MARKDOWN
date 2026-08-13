@@ -13,9 +13,15 @@ Esta primera versión contiene la estructura inicial en **HTML, CSS y JavaScript
 - [x] Panel principal con módulos visibles según rol.
 - [x] Estructura de estilos accesible y adaptable.
 - [x] Archivos Markdown iniciales.
+<<<<<<< HEAD
 - [x] CRUD de usuarios.
 - [x] Registro y consulta de calificaciones.
 - [x] Gestión completa de comunicados.
+=======
+- [ ] CRUD de usuarios.
+- [x] Registro y consulta de calificaciones.
+- [ ] Gestión completa de comunicados.
+>>>>>>> main
 
 ---
 

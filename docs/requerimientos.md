@@ -4,9 +4,9 @@
 
 - [ ] Implementar autenticación por roles: administración, docente y estudiante/familia.
 - [ ] Implementar gestión de usuarios: alta, baja y edición de personas.
-- [ ] Implementar un módulo académico con registro de calificaciones y/o asistencia.
+- [x] Implementar un módulo académico con registro de calificaciones y/o asistencia.
 - [ ] Implementar un tablón de comunicados para crear y consultar avisos.
-- [ ] Restringir la información mostrada de acuerdo con el rol del usuario.
+- [x] Restringir la información mostrada de acuerdo con el rol del usuario.
 
 ## Requerimientos no funcionales
 
@@ -15,7 +15,7 @@
 - [x] Incluir estados de foco visibles para navegación por teclado.
 - [ ] Revisar contraste y accesibilidad durante todo el desarrollo.
 - [ ] Proteger los datos sensibles y evitar exponer información personal innecesaria.
-- [ ] Mantener el código versionado en Git desde el inicio.
+- [x] Mantener el código versionado en Git desde el inicio.
 
 ## Alcance inicial acordado
 

@@ -6,16 +6,21 @@ loginForm?.addEventListener('submit', (event) => {
 
   const formData = new FormData(loginForm);
   const username = formData.get('username')?.trim();
+  const password = formData.get('password');
   const role = formData.get('role');
 
-  if (!username || !role) {
+  if (!username || !role || !password) {
     loginMessage.textContent = 'Complete los datos requeridos.';
     return;
   }
 
-  // Prototipo únicamente: NO valida credenciales reales.
-  // El compañero encargado de autenticación debe reemplazar este flujo
-  // por una validación segura en backend y nunca almacenar contraseñas en texto plano.
+  // Validación de contraseña solicitada por el usuario
+  if (password !== 'admin123') {
+    loginMessage.textContent = 'Contraseña incorrecta.';
+    return;
+  }
+
+  // Prototipo únicamente: guarda sesión simulada
   localStorage.setItem('intranetSession', JSON.stringify({ username, role }));
   window.location.href = 'dashboard.html';
 });

@@ -4,7 +4,7 @@
 
 Proyecto académico para construir un prototipo funcional de **intranet escolar** de uso interno en una institución pública. Los perfiles principales son administración, docentes y estudiantes/familias.
 
-La base actual utiliza HTML, CSS y JavaScript. El backend y la base de datos todavía no se han definido.
+La base actual utiliza HTML, CSS y JavaScript. El backend y la base de datos todavía no se han definido. El equipo trabaja los módulos de usuarios, académico y comunicados en ramas separadas para después integrarlos.
 
 ## Requerimientos
 
@@ -17,6 +17,14 @@ La base actual utiliza HTML, CSS y JavaScript. El backend y la base de datos tod
 - Protección de datos sensibles.
 - Versionado con Git.
 
+### Estado del módulo académico
+
+- Existe una primera implementación centrada en **calificaciones**.
+- Administración y docentes pueden registrar, editar y eliminar registros en el prototipo.
+- Estudiante/familia dispone de consulta sin controles de modificación.
+- Los datos se almacenan temporalmente en `localStorage` hasta integrar backend y base de datos.
+- La relación temporal del estudiante se realiza comparando el nombre del registro con el nombre usado en el login de demostración.
+
 ## Reglas
 
 - Mantener separados HTML, CSS y JavaScript.
@@ -24,13 +32,17 @@ La base actual utiliza HTML, CSS y JavaScript. El backend y la base de datos tod
 - Evitar código duplicado cuando sea posible.
 - Documentar decisiones técnicas relevantes en Markdown.
 - Hacer cambios pequeños y fáciles de revisar en Git.
+- Mantener las validaciones de interfaz, pero repetir las validaciones importantes en el servidor cuando exista backend.
+- No romper el acceso a módulos que estén desarrollando otros integrantes.
 
 ## Restricciones
 
 - NO exponer datos personales innecesarios, especialmente de menores.
 - NO guardar contraseñas en texto plano.
 - NO considerar `localStorage` como un mecanismo de autenticación real.
+- NO considerar `localStorage` como almacenamiento definitivo de calificaciones.
 - NO permitir que el frontend sea la única capa que controle los permisos cuando exista backend.
+- NO permitir que un estudiante consulte datos académicos de otros estudiantes en la implementación final.
 - NO agregar tecnologías nuevas sin documentar el motivo de la decisión.
 
 ## Objetivos
@@ -38,6 +50,8 @@ La base actual utiliza HTML, CSS y JavaScript. El backend y la base de datos tod
 - Contar con una base común sobre la que los integrantes puedan trabajar en paralelo.
 - Implementar los requerimientos mínimos del proyecto.
 - Mantener la documentación Markdown actualizada junto con el código.
+- Completar un módulo académico funcional para registro y consulta de calificaciones.
+- Sustituir progresivamente las simulaciones de frontend por autenticación y persistencia reales.
 - Llegar a un prototipo funcional, entendible y demostrable.
 
 ## Memoria del proyecto
@@ -46,12 +60,16 @@ La base actual utiliza HTML, CSS y JavaScript. El backend y la base de datos tod
 - Se prepararon tres áreas funcionales principales: usuarios, académico y comunicados.
 - El acceso actual por roles es solo una maqueta y debe sustituirse por autenticación segura.
 - `CONTRIBUTING.md` se mantiene corto por ahora para que el equipo pueda definir después sus reglas definitivas.
+- **Módulo académico:** se decidió implementar primero calificaciones porque el requerimiento acepta calificaciones y/o asistencia y esto permite mantener un alcance controlado.
+- **Persistencia académica temporal:** se usa `localStorage` exclusivamente para probar el flujo de registro, edición, eliminación y consulta antes de contar con una base de datos.
+- **Consulta temporal de estudiante:** se compara `studentName` con el usuario de la sesión simulada; esta decisión debe eliminarse al integrar usuarios reales.
 
 ## Buenas prácticas
 
 - Documentar el **por qué** de las decisiones importantes.
 - Usar HTML semántico y controles accesibles.
 - Validar los datos tanto en cliente como en servidor cuando exista backend.
+- Crear contenido dinámico mediante `textContent` para reducir riesgos de inyección en el prototipo.
 - Mantener un historial de commits que refleje el avance real del equipo.
 - Actualizar `CHANGELOG.md` al completar cambios relevantes.
 - Actualizar esta memoria cuando cambie una decisión importante del proyecto.
