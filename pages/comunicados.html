@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Comunicados | Centro Educativo
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="/Proyecto-Intranet-MARKDOWN/src/styles/comunicados.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="topbar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                CE
+            </div>
+
+            <div>
+
+                <h1>
+                    Centro Educativo
+                </h1>
+
+                <span>
+                    Panel de Comunicados
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="topbar-actions">
+
+            <div class="role-selector">
+
+                <label for="roleSelect">
+                    Vista:
+                </label>
+
+                <select id="roleSelect">
+
+                    <option value="usuario">
+                        Estudiante / Familia
+                    </option>
+
+                    <option value="admin">
+                        Administrador
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="user-avatar">
+                AC
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         CONTENIDO PRINCIPAL
+    ====================================================== -->
+
+    <main class="container">
+
+
+        <section class="page-header">
+
+            <div>
+
+                <span class="section-label">
+                    COMUNICACIÓN INSTITUCIONAL
+                </span>
+
+                <h2>
+                    Comunicados
+                </h2>
+
+                <p>
+                    Consulta los avisos oficiales y mantente
+                    informado sobre las actividades y novedades
+                    del centro educativo.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             VISTA ESTUDIANTE / FAMILIA
+        ================================================== -->
+
+        <section id="userView">
+
+
+            <div class="section-title">
+
+                <div>
+
+                    <h3>
+                        Publicaciones oficiales
+                    </h3>
+
+                    <p>
+                        Avisos publicados por la institución.
+                    </p>
+
+                </div>
+
+
+                <div class="publication-counter">
+
+                    <span id="userCounter">
+                        0
+                    </span>
+
+                    comunicados
+
+                </div>
+
+            </div>
+
+
+            <!-- FILTROS -->
+
+            <div class="filters">
+
+
+                <div class="search-box">
+
+                    <!-- ICONO BUSCAR -->
+
+                    <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+
+                        <circle
+                            cx="11"
+                            cy="11"
+                            r="7"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        />
+
+                        <path
+                            d="M16.5 16.5L21 21"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                    </svg>
+
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Buscar comunicados..."
+                    >
+
+                </div>
+
+
+                <select id="categoryFilter">
+
+                    <option value="todos">
+                        Todas las categorías
+                    </option>
+
+                    <option value="academico">
+                        Académico
+                    </option>
+
+                    <option value="evento">
+                        Eventos
+                    </option>
+
+                    <option value="administrativo">
+                        Administrativo
+                    </option>
+
+                    <option value="urgente">
+                        Urgente
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- COMUNICADOS -->
+
+            <div
+                id="communicationsContainer"
+                class="communications-grid"
+            >
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             VISTA ADMINISTRADOR / DOCENTE
+        ================================================== -->
+
+        <section
+            id="adminView"
+            class="hidden"
+        >
+
+
+            <div class="admin-header">
+
+                <div>
+
+                    <span class="section-label">
+                        GESTIÓN INSTITUCIONAL
+                    </span>
+
+                    <h3>
+                        Administrar comunicados
+                    </h3>
+
+                    <p>
+                        Crea, modifica y elimina publicaciones
+                        oficiales.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="btn btn-primary"
+                    id="newCommunicationBtn"
+                >
+
+                    <!-- ICONO PLUS -->
+
+                    <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+
+                        <path
+                            d="M12 5V19"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M5 12H19"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                    </svg>
+
+                    Nuevo comunicado
+
+                </button>
+
+            </div>
+
+
+            <!-- ESTADÍSTICAS -->
+
+            <div class="stats-grid">
+
+
+                <!-- COMUNICADOS -->
+
+                <div class="stat-card">
+
+                    <span class="stat-icon">
+
+                        <!-- ICONO MEGÁFONO -->
+
+                        <svg
+                            width="22"
+                            height="22"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+
+                            <path
+                                d="M3 11V13C3 14.1 3.9 15 5 15H7L10 20H12L10 15H13L19 18V6L13 9H5C3.9 9 3 9.9 3 11Z"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+
+                            <path
+                                d="M21 9C21.6 10.2 21.6 13.8 21 15"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                            />
+
+                        </svg>
+
+                    </span>
+
+
+                    <div>
+
+                        <strong id="totalCommunications">
+                            0
+                        </strong>
+
+                        <span>
+                            Comunicados
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- COMENTARIOS -->
+
+                <div class="stat-card">
+
+                    <span class="stat-icon">
+
+                        <!-- ICONO COMENTARIO -->
+
+                        <svg
+                            width="22"
+                            height="22"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+
+                            <path
+                                d="M20 11.5C20 15.64 16.42 19 12 19C10.72 19 9.51 18.72 8.45 18.23L4 20L5.43 16.35C4.53 15.05 4 13.38 4 11.5C4 7.36 7.58 4 12 4C16.42 4 20 7.36 20 11.5Z"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+
+                            <path
+                                d="M8 11.5H8.01M12 11.5H12.01M16 11.5H16.01"
+                                stroke="currentColor"
+                                stroke-width="2.5"
+                                stroke-linecap="round"
+                            />
+
+                        </svg>
+
+                    </span>
+
+
+                    <div>
+
+                        <strong id="totalComments">
+                            0
+                        </strong>
+
+                        <span>
+                            Comentarios
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- REACCIONES -->
+
+                <div class="stat-card">
+
+                    <span class="stat-icon">
+
+                        <!-- ICONO ME GUSTA -->
+
+                        <svg
+                            width="22"
+                            height="22"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+
+                            <path
+                                d="M7 10V21H4C3.45 21 3 20.55 3 20V11C3 10.45 3.45 10 4 10H7Z"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linejoin="round"
+                            />
+
+                            <path
+                                d="M7 21H17.5C18.4 21 19.18 20.4 19.41 19.53L21.08 13.2C21.42 11.91 20.45 10.65 19.12 10.65H15V6C15 4.34 13.66 3 12 3L7 10V21Z"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+
+                        </svg>
+
+                    </span>
+
+
+                    <div>
+
+                        <strong id="totalReactions">
+                            0
+                        </strong>
+
+                        <span>
+                            Reacciones
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 TABLA DE COMUNICADOS
+            ================================================== -->
+
+            <div class="admin-panel">
+
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h4>
+                            Comunicados publicados
+                        </h4>
+
+                        <p>
+                            Gestiona las publicaciones existentes.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Comunicado
+                                </th>
+
+                                <th>
+                                    Categoría
+                                </th>
+
+                                <th>
+                                    Autor
+                                </th>
+
+                                <th>
+                                    Fecha
+                                </th>
+
+                                <th>
+                                    Interacciones
+                                </th>
+
+                                <th>
+                                    Acciones
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="adminTableBody">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         MODAL
+    ====================================================== -->
+
+    <div
+        id="communicationModal"
+        class="modal hidden"
+    >
+
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+
+                <div>
+
+                    <span class="section-label">
+                        PUBLICACIÓN
+                    </span>
+
+                    <h3 id="modalTitle">
+                        Nuevo comunicado
+                    </h3>
+
+                </div>
+
+
+                <button
+                    class="close-modal"
+                    id="closeModalBtn"
+                    aria-label="Cerrar"
+                >
+
+                    <!-- ICONO X -->
+
+                    <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+
+                        <path
+                            d="M6 6L18 18"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M18 6L6 18"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                    </svg>
+
+                </button>
+
+            </div>
+
+
+            <form id="communicationForm">
+
+                <input
+                    type="hidden"
+                    id="communicationId"
+                >
+
+
+                <div class="form-group">
+
+                    <label for="title">
+                        Título del comunicado
+                    </label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        placeholder="Ej. Reunión de padres de familia"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label for="category">
+                            Categoría
+                        </label>
+
+                        <select
+                            id="category"
+                            required
+                        >
+
+                            <option value="">
+                                Seleccionar
+                            </option>
+
+                            <option value="academico">
+                                Académico
+                            </option>
+
+                            <option value="evento">
+                                Eventos
+                            </option>
+
+                            <option value="administrativo">
+                                Administrativo
+                            </option>
+
+                            <option value="urgente">
+                                Urgente
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="author">
+                            Autor
+                        </label>
+
+                        <input
+                            type="text"
+                            id="author"
+                            value="Administración"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="content">
+                        Contenido
+                    </label>
+
+                    <textarea
+                        id="content"
+                        rows="7"
+                        placeholder="Escribe el comunicado..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        id="cancelBtn"
+                    >
+                        Cancelar
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+
+                        <!-- ICONO PUBLICAR -->
+
+                        <svg
+                            width="17"
+                            height="17"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+
+                            <path
+                                d="M22 2L11 13"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+
+                            <path
+                                d="M22 2L15 22L11 13L2 9L22 2Z"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+
+                        </svg>
+
+                        Publicar comunicado
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <script src="../src/js/comunicados.js"></script>
+
+</body>
+
+</html>
