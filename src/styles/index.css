@@ -1,14 +1,14 @@
 :root {
-  --bg: #f5f7fa;
+  --bg: #F4EFE7;
   --surface: #ffffff;
-  --text: #1f2937;
-  --muted: #667085;
-  --border: #d7dde5;
-  --primary: #1f6f5f;
-  --primary-dark: #175548;
-  --focus: #111827;
+  --text: #2B2117;
+  --muted: #7996A7;
+  --border: #E3D3B9;
+  --primary: #D54E1A;
+  --primary-dark: #A83B13;
+  --focus: #1F1B16;
   --radius: 14px;
-  --shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+  --shadow: 0 10px 30px rgba(31, 27, 22, 0.08);
 }
 
 * { box-sizing: border-box; }
@@ -53,7 +53,7 @@ nav a:hover { text-decoration: underline; }
   cursor: pointer;
 }
 .button:hover { background: var(--primary-dark); }
-.button-secondary { background: #374151; }
+.button-secondary { background: #7996A7; }
 
 .login-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
 .form-card { display: grid; gap: .7rem; }
