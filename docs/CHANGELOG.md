@@ -43,7 +43,6 @@ Todos los cambios relevantes del proyecto se documentarán en este archivo.
 
 ### Pendiente
 
-- Backend y base de datos.
 - Autenticación real.
 - Gestión de usuarios.
 - Módulo académico completo.

@@ -2,89 +2,72 @@
 
 ## Objetivo
 
-Definir una base técnica sencilla que permita al equipo construir el prototipo de forma incremental y mantener separadas la interfaz, la lógica del cliente y la documentación.
+Definir la base técnica y flujo de comunicación integrada de los diferentes módulos del sistema (Acceso, Dashboard, Usuarios, Académico y Comunicados) utilizando un almacén de datos común en el navegador.
 
-## Stack inicial
+## Stack actual de la intranet
 
 | Capa | Tecnología actual | Estado |
 |---|---|---|
-| Interfaz | HTML5 | Implementada |
-| Estilos | CSS3 | Implementada |
-| Lógica cliente | JavaScript | Implementada |
-| Persistencia temporal | `localStorage` | Solo prototipo |
-| Backend | Por definir | Pendiente |
-| Base de datos | Por definir | Pendiente |
+| Interfaz | HTML5 (Semántico, accesible) | Integrada |
+| Estilos | CSS3 (Sistema de diseño en `login.css` e `index.css`) | Integrada |
+| Lógica cliente | JavaScript (ES6 moderno) | Integrada |
+| Persistencia | `localStorage` y `sessionStorage` compartidos | Integrada |
+| Seguridad | Token de sesión con expiración + limitación de intentos | Integrada |
 
-> El alcance técnico del proyecto puede ajustarse. Por eso el prototipo actual no impone todavía un framework, backend o motor de base de datos.
-
-## Estructura
+## Estructura de archivos
 
 ```text
 /
 ├── pages/
-│   ├── index.html
-│   ├── dashboard.html
-│   └── academico.html
+│   ├── login.html        (Pantalla de acceso segura)
+│   ├── dashboard.html    (Panel general de módulos)
+│   ├── usuarios.html     (Gestión y administración)
+│   ├── academico.html    (Registro de calificaciones)
+│   └── comunicados.html  (Tablón de avisos oficiales)
 ├── src/
 │   ├── js/
-│   │   ├── index.js
+│   │   ├── login.js
 │   │   ├── dashboard.js
-│   │   └── academico.js
+│   │   ├── usuarios.js
+│   │   ├── academico.js
+│   │   └── comunicados.js
 │   └── styles/
-│       └── index.css
+│       ├── login.css     (Tokens de colores base del sistema)
+│       ├── index.css     (Alias de estilos compartidos)
+│       ├── usuarios.css
+│       └── comunicados.css
 └── docs/
 ```
 
-## Flujo general actual
+## Flujo general del sistema
 
-1. El usuario abre `pages/index.html`.
-2. Completa la maqueta de acceso y selecciona un rol.
-3. JavaScript guarda una sesión temporal de demostración en `localStorage`.
-4. El usuario es dirigido a `pages/dashboard.html`.
-5. El panel muestra módulos según el rol seleccionado.
-6. El módulo académico se abre desde `pages/academico.html`.
+1. **Pantalla de Acceso (`login.html`)**:
+   - El usuario introduce credenciales.
+   - `login.js` consulta `localStorage['intranetUsers']`.
+   - Si las credenciales coinciden y el usuario no está inactivo o bloqueado, se crea un objeto de sesión con una expiración de 2 horas en `localStorage` (si seleccionó "Recordarme") o `sessionStorage`.
+   - Se escribe un registro en la bitácora de accesos.
+   - Redirige a `dashboard.html`.
 
-## Arquitectura del módulo académico
+2. **Panel de Control (`dashboard.html`)**:
+   - `dashboard.js` verifica la validez y expiración de la sesión.
+   - Si la sesión expiró o no existe, redirige automáticamente a `login.html`.
+   - Filtra y oculta los accesos a módulos de la interfaz basándose en el rol real del usuario (`administracion`, `docente`, `estudiante`).
 
-El módulo se mantiene dividido en tres responsabilidades principales:
+3. **Módulo de Usuarios (`usuarios.html`)**:
+   - Permite administrar el origen de datos de todas las cuentas.
+   - Permite al Administrador ver la bitácora de accesos y cambios en tiempo real, desbloquear cuentas con excesos de intentos fallidos y definir permisos por rol.
 
-| Archivo | Responsabilidad |
-|---|---|
-| `pages/academico.html` | Estructura semántica, formulario, resumen y tabla de calificaciones |
-| `src/js/academico.js` | Reglas por rol, validaciones, CRUD temporal, filtros y renderizado |
-| `src/styles/index.css` | Estilos reutilizados y reglas visuales específicas del módulo |
+4. **Módulo Académico (`academico.html`)**:
+   - Permite a docentes y administradores ingresar calificaciones persistidas en `intranetAcademicGrades`.
+   - Muestra resúmenes y calificaciones específicas.
 
-### Flujo de calificaciones
+## Flujo de datos y persistencia
 
-1. Administración o docente accede al formulario.
-2. Registra estudiante, materia, evaluación, nota y observaciones opcionales.
-3. JavaScript valida que la nota se encuentre entre 0 y 100.
-4. El registro se almacena temporalmente en `localStorage`.
-5. La tabla y el resumen se actualizan inmediatamente.
-6. Administración y docente pueden editar o eliminar registros.
-7. Estudiante/familia entra en modo de consulta y no recibe controles de edición.
+El estado global de la aplicación se centraliza en el almacenamiento web local usando las siguientes llaves:
 
-### Restricción temporal de consulta
-
-Mientras no exista autenticación real, el rol `estudiante` solo muestra registros cuyo campo `studentName` coincida con el nombre utilizado al iniciar sesión.
-
-Esta decisión **no representa el diseño final de seguridad**. En una arquitectura con backend, cada estudiante debe estar relacionado mediante un identificador interno y las consultas deben filtrarse y autorizarse en el servidor.
-
-## Decisiones iniciales
-
-- Mantener HTML, CSS y JavaScript separados.
-- Usar HTML semántico y etiquetas asociadas a los controles de formulario.
-- Preparar la interfaz para los tres perfiles mínimos: administración, docente y estudiante/familia.
-- Implementar primero calificaciones y dejar asistencia como ampliación opcional.
-- Usar `localStorage` únicamente como persistencia temporal durante el prototipado.
-- No fijar todavía una tecnología de backend antes de que el equipo tome esa decisión.
-
-## Seguridad
-
-La implementación final debe:
-
-- No exponer información personal innecesaria.
-- No guardar contraseñas en texto plano.
-- Validar los permisos en el servidor, no solo ocultar elementos en la interfaz.
-- Asegurar que cada usuario pueda consultar únicamente la información correspondiente a su rol e identidad.
-- Sustituir el almacenamiento de calificaciones en el navegador por una base de datos protegida.
+- `intranetUsers`: Base de datos de perfiles y cuentas de acceso.
+- `intranetSession`: Token de sesión activa con indicador de expiración.
+- `intranetAccessLogs`: Historial de intentos de inicio de sesión para auditoría.
+- `intranetChangeLogs`: Historial de acciones administrativas.
+- `intranetSystemAlerts`: Mensajes de alerta del sistema y notificaciones.
+- `intranetAcademicGrades`: Calificaciones y observaciones académicas registradas.

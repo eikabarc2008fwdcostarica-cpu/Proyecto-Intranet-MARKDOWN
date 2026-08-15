@@ -1,7 +1,7 @@
 const session = JSON.parse(localStorage.getItem('intranetSession') || 'null');
 
 if (!session) {
-  window.location.href = 'index.html';
+  window.location.href = 'login.html';
 }
 
 const roleLabels = {
@@ -257,7 +257,7 @@ subjectFilter?.addEventListener('change', renderGrades);
 
 document.querySelector('#logoutButton')?.addEventListener('click', () => {
   localStorage.removeItem('intranetSession');
-  window.location.href = 'index.html';
+  window.location.href = 'login.html';
 });
 
 renderGrades();

@@ -93,13 +93,13 @@ recoverForm?.addEventListener('submit', (e) => {
 
   if (matched) {
     setMessage(recoverMsg,
-      '✅ Se ha enviado un correo con instrucciones a la dirección asociada a la cuenta.',
+      'Se ha enviado un correo con instrucciones a la dirección asociada a la cuenta.',
       'success'
     );
   } else {
     // Por seguridad no revelamos si la cuenta existe o no
     setMessage(recoverMsg,
-      '✅ Si existe una cuenta con ese usuario o correo, recibirás instrucciones en los próximos minutos.',
+      'Si existe una cuenta con ese usuario o correo, recibirás instrucciones en los próximos minutos.',
       'success'
     );
   }

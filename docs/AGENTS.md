@@ -2,74 +2,43 @@
 
 ## Contexto
 
-Proyecto académico para construir un prototipo funcional de **intranet escolar** de uso interno en una institución pública. Los perfiles principales son administración, docentes y estudiantes/familias.
+Proyecto académico para construir una **intranet escolar** integrada de uso interno en una institución pública. Los perfiles principales soportados son administración, docentes y estudiantes/familias.
 
-La base actual utiliza HTML, CSS y JavaScript. El backend y la base de datos todavía no se han definido. El equipo trabaja los módulos de usuarios, académico y comunicados en ramas separadas para después integrarlos.
+La base utiliza HTML, CSS y JavaScript estructurado. El backend y la base de datos se simulan de forma robusta e interactiva mediante `localStorage` y `sessionStorage`, actuando como una base de datos local compartida entre módulos.
 
 ## Requerimientos
 
-- Autenticación por roles.
-- Gestión de usuarios.
-- Módulo académico de calificaciones y/o asistencia.
-- Tablón de comunicados.
-- Consulta de información según permisos del rol.
-- Interfaz clara y accesible.
-- Protección de datos sensibles.
+- Autenticación segura por roles con expiración.
+- Gestión completa de usuarios (Estudiantes, Profesores, Encargados).
+- Módulo académico de calificaciones (calificaciones).
+- Tablón de comunicados interactivo (comunicados, comentarios, reacciones).
+- Bitácora de cambios, accesos y auditoría de seguridad del sistema.
+- Interfaz clara, profesional y libre de emojis, utilizando iconos vectoriales.
 - Versionado con Git.
 
-### Estado del módulo académico
+### Estado del módulo académico y seguridad
 
-- Existe una primera implementación centrada en **calificaciones**.
-- Administración y docentes pueden registrar, editar y eliminar registros en el prototipo.
-- Estudiante/familia dispone de consulta sin controles de modificación.
-- Los datos se almacenan temporalmente en `localStorage` hasta integrar backend y base de datos.
-- La relación temporal del estudiante se realiza comparando el nombre del registro con el nombre usado en el login de demostración.
+- **Autenticación real del prototipo**: Las credenciales introducidas en `login.html` se validan directamente comparando contra los objetos de usuario guardados en `localStorage['intranetUsers']`.
+- **Bloqueo de seguridad**: Si un usuario falla la contraseña 3 veces, el sistema cambia su `status` a `'bloqueado'` de manera persistente. Solo un administrador puede desbloquearlo desde la sección de "Cuentas" del Módulo de Usuarios.
+- **Expiración de Sesión**: La sesión expira automáticamente pasadas 2 horas del inicio o tras un periodo de inactividad detectada mediante listeners globales de mouse/teclado.
+- **Auditoría integrada**: Cada inicio de sesión exitoso o fallido registra automáticamente los metadatos de acceso (fecha, hora, dispositivo, estado) en `intranetAccessLogs`.
 
 ## Reglas
 
 - Mantener separados HTML, CSS y JavaScript.
-- Usar nombres claros y consistentes.
-- Evitar código duplicado cuando sea posible.
-- Documentar decisiones técnicas relevantes en Markdown.
-- Hacer cambios pequeños y fáciles de revisar en Git.
-- Mantener las validaciones de interfaz, pero repetir las validaciones importantes en el servidor cuando exista backend.
-- No romper el acceso a módulos que estén desarrollando otros integrantes.
+- Usar Font Awesome 6 en lugar de emojis para mantener una estética profesional y limpia.
+- Evitar código duplicado.
+- Redirigir siempre a `login.html` en vez del antiguo `index.html` para el control de sesiones inactivas o no autorizadas.
+- No romper la persistencia de datos semilla al inicializar los módulos.
 
 ## Restricciones
 
-- NO exponer datos personales innecesarios, especialmente de menores.
-- NO guardar contraseñas en texto plano.
-- NO considerar `localStorage` como un mecanismo de autenticación real.
-- NO considerar `localStorage` como almacenamiento definitivo de calificaciones.
-- NO permitir que el frontend sea la única capa que controle los permisos cuando exista backend.
-- NO permitir que un estudiante consulte datos académicos de otros estudiantes en la implementación final.
-- NO agregar tecnologías nuevas sin documentar el motivo de la decisión.
+- NO exponer contraseñas en texto plano en el cliente de manera hardcodeada (removido `password !== 'admin123'`).
+- NO permitir que usuarios inactivos o bloqueados puedan saltarse la validación.
+- NO omitir la limpieza de elementos no accesibles.
 
-## Objetivos
+## Objetivos Alcanzados
 
-- Contar con una base común sobre la que los integrantes puedan trabajar en paralelo.
-- Implementar los requerimientos mínimos del proyecto.
-- Mantener la documentación Markdown actualizada junto con el código.
-- Completar un módulo académico funcional para registro y consulta de calificaciones.
-- Sustituir progresivamente las simulaciones de frontend por autenticación y persistencia reales.
-- Llegar a un prototipo funcional, entendible y demostrable.
-
-## Memoria del proyecto
-
-- **Versión 0.1.0:** se creó una base sin framework con HTML, CSS y JavaScript para no bloquear al equipo antes de decidir el backend.
-- Se prepararon tres áreas funcionales principales: usuarios, académico y comunicados.
-- El acceso actual por roles es solo una maqueta y debe sustituirse por autenticación segura.
-- `CONTRIBUTING.md` se mantiene corto por ahora para que el equipo pueda definir después sus reglas definitivas.
-- **Módulo académico:** se decidió implementar primero calificaciones porque el requerimiento acepta calificaciones y/o asistencia y esto permite mantener un alcance controlado.
-- **Persistencia académica temporal:** se usa `localStorage` exclusivamente para probar el flujo de registro, edición, eliminación y consulta antes de contar con una base de datos.
-- **Consulta temporal de estudiante:** se compara `studentName` con el usuario de la sesión simulada; esta decisión debe eliminarse al integrar usuarios reales.
-
-## Buenas prácticas
-
-- Documentar el **por qué** de las decisiones importantes.
-- Usar HTML semántico y controles accesibles.
-- Validar los datos tanto en cliente como en servidor cuando exista backend.
-- Crear contenido dinámico mediante `textContent` para reducir riesgos de inyección en el prototipo.
-- Mantener un historial de commits que refleje el avance real del equipo.
-- Actualizar `CHANGELOG.md` al completar cambios relevantes.
-- Actualizar esta memoria cuando cambie una decisión importante del proyecto.
+- Base común integrada de la intranet escolar sin errores de redirección.
+- Gestión de usuarios robusta conectada al Login.
+- Control de seguridad local con limitador de intentos y cierre de sesión automático.

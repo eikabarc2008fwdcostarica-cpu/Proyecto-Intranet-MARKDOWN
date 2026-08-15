@@ -19,9 +19,10 @@ feature/andres
 
 ## Commits
 
-Commits existentes en el repositorio:
+Commits en el repositorio actualizados hasta la fecha:
 
 ```text
+a4f89d3 corrección de redireccionamientos y eliminación de emojis
 bc8de95 Merge pull request #5 from eikabarc2008fwdcostarica-cpu/feature-Alanie
 4db4d6c implementación del modulo de comunicados
 1b1ea6b Merge pull request #3 from eikabarc2008fwdcostarica-cpu/feature/andres
@@ -38,7 +39,7 @@ a273475 Creacion de la estructura de carpetas
 
 ## Revisión de Pull Requests
 
-Pull requests que se han realizado en el repositorio:
+Historial de Pull Requests integrados:
 
 - **Pull Request #1**: Implementar estructura base del proyecto (fusionado desde la rama `feature/andres` a `main`)
 - **Pull Request #2**: actualización de CSS (fusionado desde la rama `feature-Alanie` a `main`)
@@ -46,4 +47,4 @@ Pull requests que se han realizado en el repositorio:
 - **Pull Request #4**: Implementación del módulo de gestión de usuarios (fusionado desde la rama `Feature-Eiker` a `main`)
 - **Pull Request #5**: implementación del modulo de comunicados (fusionado desde la rama `feature-Alanie` a `main`)
 
-> Este archivo se mantiene deliberadamente simple en la versión inicial y podrá ampliarse cuando el equipo defina su flujo definitivo de trabajo.
+> Este archivo sirve de referencia para los lineamientos y políticas de integración de código del equipo.
