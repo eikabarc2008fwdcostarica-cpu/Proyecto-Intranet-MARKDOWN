@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel | Intranet Escolar</title>
+  <meta name="description" content="Panel principal de la Intranet Escolar. Accede a los módulos disponibles según tu rol institucional.">
+  <title>Panel principal | Intranet Escolar</title>
   <link rel="stylesheet" href="../src/styles/index.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <header class="site-header">
@@ -13,7 +15,9 @@
         <p class="eyebrow">Intranet Escolar</p>
         <h1>Panel principal</h1>
       </div>
-      <button id="logoutButton" class="button button-secondary" type="button">Cerrar sesión</button>
+      <button id="logoutButton" class="button button-secondary" type="button">
+        <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i> Cerrar sesión
+      </button>
     </div>
   </header>
 
@@ -26,21 +30,27 @@
 
     <section class="grid grid-3" aria-label="Módulos disponibles">
       <article class="card module-card" data-roles="administracion">
-        <h3>Gestión de usuarios</h3>
-        <p>Base para crear, editar, listar y desactivar usuarios.</p>
-        <a class="button" href="usuarios.html" style="margin-top: 1rem; display: inline-block; text-align: center;">Acceder</a>
+        <h3><i class="fa-solid fa-users-gear" aria-hidden="true" style="color:var(--primary);margin-right:.5rem;"></i>Gestión de usuarios</h3>
+        <p>Crear, editar, listar y desactivar usuarios del sistema por rol.</p>
+        <a class="button" href="usuarios.html" style="margin-top: 1rem; display: inline-flex; align-items: center; gap: .5rem;">
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Acceder
+        </a>
       </article>
 
       <article class="card module-card" data-roles="administracion,docente,estudiante">
-        <h3>Módulo académico</h3>
+        <h3><i class="fa-solid fa-graduation-cap" aria-hidden="true" style="color:var(--primary);margin-right:.5rem;"></i>Módulo académico</h3>
         <p>Registro y consulta de calificaciones según el rol de la sesión.</p>
-        <a class="button" href="academico.html" style="margin-top: 1rem; display: inline-block; text-align: center;">Abrir módulo</a>
+        <a class="button" href="academico.html" style="margin-top: 1rem; display: inline-flex; align-items: center; gap: .5rem;">
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Abrir módulo
+        </a>
       </article>
 
       <article class="card module-card" data-roles="administracion,docente,estudiante">
-        <h3>Comunicados</h3>
-        <p>Base para publicar y consultar avisos del centro.</p>
-        <a class="button" href="comunicados.html" style="margin-top: 1rem; display: inline-block; text-align: center;">Abrir módulo</a>
+        <h3><i class="fa-solid fa-bullhorn" aria-hidden="true" style="color:var(--primary);margin-right:.5rem;"></i>Comunicados</h3>
+        <p>Publicar y consultar avisos y comunicados oficiales del centro.</p>
+        <a class="button" href="comunicados.html" style="margin-top: 1rem; display: inline-flex; align-items: center; gap: .5rem;">
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Abrir módulo
+        </a>
       </article>
     </section>
   </main>

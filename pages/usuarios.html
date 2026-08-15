@@ -6,6 +6,7 @@
   <title>Gestión de Usuarios | Intranet Escolar</title>
   <link rel="stylesheet" href="../src/styles/index.css">
   <link rel="stylesheet" href="../src/styles/usuarios.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
@@ -13,7 +14,7 @@
     <div class="container header-content">
       <div>
         <p class="eyebrow">Administración</p>
-        <h1>Gestión de Usuarios</h1>
+        <h1>Módulo de Usuarios</h1>
       </div>
       <nav aria-label="Navegación secundaria">
         <a href="dashboard.html" class="button button-secondary">Volver al Panel</a>
@@ -22,81 +23,379 @@
   </header>
 
   <main class="container section">
-    <!-- Navegación por pestañas -->
-    <div class="tabs-nav">
-      <button class="tab-btn active" data-tab="usuarios-tab">Usuarios</button>
-      <button class="tab-btn" data-tab="auditoria-tab">Auditoría y Accesos</button>
+    <div class="admin-layout">
+      <!-- Barra lateral de navegación -->
+      <aside class="sidebar-nav" aria-label="Navegación del módulo">
+        <p class="nav-title">General</p>
+        <button class="nav-item-btn active" data-section="dashboard">
+          <i class="fa-solid fa-chart-simple"></i> Panel Resumen
+        </button>
+        
+        <p class="nav-title">Entidades</p>
+        <button class="nav-item-btn" data-section="estudiantes">
+          <i class="fa-solid fa-user-graduate"></i> Estudiantes
+        </button>
+        <button class="nav-item-btn" data-section="profesores">
+          <i class="fa-solid fa-chalkboard-user"></i> Profesores
+        </button>
+        <button class="nav-item-btn" data-section="padres">
+          <i class="fa-solid fa-users"></i> Padres / Encargados
+        </button>
+
+        <p class="nav-title">Seguridad</p>
+        <button class="nav-item-btn" data-section="cuentas">
+          <i class="fa-solid fa-key"></i> Cuentas de Acceso
+        </button>
+        <button class="nav-item-btn" data-section="roles">
+          <i class="fa-solid fa-shield-halved"></i> Roles y Permisos
+        </button>
+
+        <p class="nav-title">Auditoría y Alertas</p>
+        <button class="nav-item-btn" data-section="notificaciones">
+          <i class="fa-solid fa-bell"></i> Notificaciones
+        </button>
+        <button class="nav-item-btn" data-section="auditoria">
+          <i class="fa-solid fa-receipt"></i> Bitácora Auditoría
+        </button>
+      </aside>
+
+      <!-- Área de Contenido Principal -->
+      <section class="content-area" aria-live="polite">
+        
+        <!-- SECCIÓN: PANEL RESUMEN -->
+        <div id="section-dashboard" class="section-content">
+          <div class="dashboard-welcome card">
+            <p class="eyebrow">Panel Resumen</p>
+            <h2>Estadísticas de Gestión</h2>
+            <p class="muted">Visualización rápida del estado de las cuentas y usuarios en el sistema.</p>
+          </div>
+          <div class="dashboard-stats">
+            <div class="card stat-card">
+              <span class="stat-label">Estudiantes</span>
+              <span class="stat-number" id="stat-estudiantes">0</span>
+              <span class="stat-footer">Registrados en la base</span>
+            </div>
+            <div class="card stat-card">
+              <span class="stat-label">Profesores</span>
+              <span class="stat-number" id="stat-profesores">0</span>
+              <span class="stat-footer">Personal docente activo</span>
+            </div>
+            <div class="card stat-card">
+              <span class="stat-label">Padres y Encargados</span>
+              <span class="stat-number" id="stat-padres">0</span>
+              <span class="stat-footer">Familias asociadas</span>
+            </div>
+            <div class="card stat-card">
+              <span class="stat-label">Cuentas Activas</span>
+              <span class="stat-number" id="stat-activas" style="color: #155724;">0</span>
+              <span class="stat-footer" id="stat-inactivas">0 inactivas / bloqueadas</span>
+            </div>
+          </div>
+
+          <div class="grid grid-2">
+            <div class="card">
+              <h3>Accesos Recientes</h3>
+              <ul class="log-list" id="miniAccessLog">
+                <!-- JS inserta registros -->
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Últimos Cambios</h3>
+              <ul class="log-list" id="miniChangeLog">
+                <!-- JS inserta registros -->
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECCIÓN: ESTUDIANTES -->
+        <div id="section-estudiantes" class="section-content hidden">
+          <div class="toolbar card">
+            <div class="search-filters-grid">
+              <input type="text" id="estudiante-search" class="live-search" placeholder="Buscar estudiante por nombre/usuario...">
+              <select id="estudiante-filter-grado">
+                <option value="">Todos los grados</option>
+                <option value="10mo Año - Sección A">10mo Año - Sección A</option>
+                <option value="10mo Año - Sección B">10mo Año - Sección B</option>
+                <option value="11mo Año - Sección A">11mo Año - Sección A</option>
+                <option value="11mo Año - Sección B">11mo Año - Sección B</option>
+              </select>
+              <select id="estudiante-filter-status">
+                <option value="">Todos los estados</option>
+                <option value="activo">Activo</option>
+                <option value="inactivo">Inactivo</option>
+              </select>
+            </div>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <button class="button btn-new-user" data-role="estudiante">Nuevo Estudiante</button>
+              <button class="button button-secondary" id="btn-import-estudiantes">Importar CSV</button>
+              <button class="button button-secondary" id="btn-export-estudiantes">Exportar CSV</button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <div class="skeleton-loader hidden" style="padding: 1.5rem;">
+              <div class="skeleton-item"></div>
+              <div class="skeleton-item"></div>
+              <div class="skeleton-item"></div>
+              <div class="skeleton-item"></div>
+            </div>
+            <table class="custom-table" id="table-estudiantes">
+              <thead>
+                <tr>
+                  <th class="sortable" data-sort="fullName">Nombre Completo</th>
+                  <th class="sortable" data-sort="username">Nombre de Usuario</th>
+                  <th>Grado y Sección</th>
+                  <th>Padre / Encargado</th>
+                  <th class="sortable" data-sort="status">Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-estudiantes">
+                <!-- JS inserta filas -->
+              </tbody>
+            </table>
+            <div id="empty-estudiantes" class="empty-state hidden">
+              <div class="empty-state-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+              <h4>No se encontraron estudiantes</h4>
+              <p>Prueba ajustando los filtros o la búsqueda.</p>
+            </div>
+            <div class="pagination" id="pag-estudiantes"></div>
+          </div>
+        </div>
+
+        <!-- SECCIÓN: PROFESORES -->
+        <div id="section-profesores" class="section-content hidden">
+          <div class="toolbar card">
+            <div class="search-filters-grid">
+              <input type="text" id="profesor-search" class="live-search" placeholder="Buscar profesor por nombre/usuario...">
+              <select id="profesor-filter-materia">
+                <option value="">Todas las materias</option>
+                <option value="Matemáticas">Matemáticas</option>
+                <option value="Física">Física</option>
+                <option value="Ciencias">Ciencias</option>
+                <option value="Español">Español</option>
+                <option value="Química">Química</option>
+              </select>
+              <select id="profesor-filter-status">
+                <option value="">Todos los estados</option>
+                <option value="activo">Activo</option>
+                <option value="inactivo">Inactivo</option>
+              </select>
+            </div>
+            <button class="button btn-new-user" data-role="profesor">Nuevo Profesor</button>
+          </div>
+
+          <div class="table-responsive">
+            <div class="skeleton-loader hidden" style="padding: 1.5rem;">
+              <div class="skeleton-item"></div>
+              <div class="skeleton-item"></div>
+              <div class="skeleton-item"></div>
+              <div class="skeleton-item"></div>
+            </div>
+            <table class="custom-table" id="table-profesores">
+              <thead>
+                <tr>
+                  <th class="sortable" data-sort="fullName">Nombre Completo</th>
+                  <th class="sortable" data-sort="username">Nombre de Usuario</th>
+                  <th>Materias Asignadas</th>
+                  <th>Disponibilidad / Horario</th>
+                  <th class="sortable" data-sort="status">Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-profesores">
+                <!-- JS inserta filas -->
+              </tbody>
+            </table>
+            <div id="empty-profesores" class="empty-state hidden">
+              <div class="empty-state-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+              <h4>No se encontraron profesores</h4>
+              <p>Ajusta el término de búsqueda o filtros.</p>
+            </div>
+            <div class="pagination" id="pag-profesores"></div>
+          </div>
+        </div>
+
+        <!-- SECCIÓN: PADRES / ENCARGADOS -->
+        <div id="section-padres" class="section-content hidden">
+          <div class="toolbar card">
+            <div class="search-filters-grid">
+              <input type="text" id="padre-search" class="live-search" placeholder="Buscar encargado por nombre/usuario...">
+              <select id="padre-filter-status">
+                <option value="">Todos los estados</option>
+                <option value="activo">Activo</option>
+                <option value="inactivo">Inactivo</option>
+              </select>
+            </div>
+            <button class="button btn-new-user" data-role="encargado">Nuevo Encargado</button>
+          </div>
+
+          <div class="table-responsive">
+            <div class="skeleton-loader hidden" style="padding: 1.5rem;">
+              <div class="skeleton-item"></div>
+              <div class="skeleton-item"></div>
+              <div class="skeleton-item"></div>
+              <div class="skeleton-item"></div>
+            </div>
+            <table class="custom-table" id="table-padres">
+              <thead>
+                <tr>
+                  <th class="sortable" data-sort="fullName">Nombre Completo</th>
+                  <th class="sortable" data-sort="username">Nombre de Usuario</th>
+                  <th>Estudiantes Asociados</th>
+                  <th>Preferencias Notificación</th>
+                  <th class="sortable" data-sort="status">Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-padres">
+                <!-- JS inserta filas -->
+              </tbody>
+            </table>
+            <div id="empty-padres" class="empty-state hidden">
+              <div class="empty-state-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+              <h4>No se encontraron encargados</h4>
+              <p>Intenta con otros filtros.</p>
+            </div>
+            <div class="pagination" id="pag-padres"></div>
+          </div>
+        </div>
+
+        <!-- SECCIÓN: CUENTAS DE ACCESO -->
+        <div id="section-cuentas" class="section-content hidden">
+          <div class="toolbar card">
+            <div class="search-filters-grid">
+              <input type="text" id="cuenta-search" class="live-search" placeholder="Buscar cuenta por usuario...">
+              <select id="cuenta-filter-status">
+                <option value="">Todos los estados</option>
+                <option value="activo">Activo</option>
+                <option value="inactivo">Inactivo</option>
+                <option value="bloqueado">Bloqueado</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <div class="skeleton-loader hidden" style="padding: 1.5rem;">
+              <div class="skeleton-item"></div>
+              <div class="skeleton-item"></div>
+              <div class="skeleton-item"></div>
+              <div class="skeleton-item"></div>
+            </div>
+            <table class="custom-table" id="table-cuentas">
+              <thead>
+                <tr>
+                  <th>Usuario</th>
+                  <th>Correo Electrónico</th>
+                  <th>2FA Activado</th>
+                  <th>Intentos Fallidos</th>
+                  <th>Estado Cuenta</th>
+                  <th>Acciones de Seguridad</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-cuentas">
+                <!-- JS inserta filas -->
+              </tbody>
+            </table>
+            <div id="empty-cuentas" class="empty-state hidden">
+              <div class="empty-state-icon"><i class="fa-solid fa-lock"></i></div>
+              <h4>No se encontraron cuentas</h4>
+            </div>
+            <div class="pagination" id="pag-cuentas"></div>
+          </div>
+        </div>
+
+        <!-- SECCIÓN: ROLES Y PERMISOS -->
+        <div id="section-roles" class="section-content hidden">
+          <div class="card">
+            <p class="eyebrow">Seguridad Administrativa</p>
+            <h2>Control de Roles y Permisos Granulares</h2>
+            <p class="muted">Configura los permisos para cada uno de los roles principales del sistema.</p>
+            
+            <div class="permissions-grid" id="roles-permission-matrix">
+              <!-- Cargado dinámicamente por JS -->
+            </div>
+            
+            <div style="margin-top: 1.5rem; text-align: right;">
+              <button class="button" id="btn-save-permissions">Guardar Matriz de Permisos</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECCIÓN: NOTIFICACIONES -->
+        <div id="section-notificaciones" class="section-content hidden">
+          <div class="grid grid-2">
+            <div class="card">
+              <h3>Historial de Alertas del Sistema</h3>
+              <p class="muted" style="font-size: 0.85rem;">Historial de notificaciones emitidas de forma automática por la plataforma.</p>
+              <ul class="log-list" id="systemAlertsLog" style="max-height: 400px; overflow-y: auto;">
+                <!-- JS inserta alertas -->
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Configuración de Políticas de Canales</h3>
+              <p class="muted" style="font-size: 0.85rem;">Seleccione los canales por los cuales el sistema enviará alertas automáticas.</p>
+              <form id="notificationsConfigForm" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+                <div class="form-group">
+                  <label class="checkbox-label">
+                    <input type="checkbox" id="notify-email" checked>
+                    Habilitar Notificaciones por Correo Electrónico
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label class="checkbox-label">
+                    <input type="checkbox" id="notify-sms">
+                    Habilitar Alertas mediante SMS (Recuperación)
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label class="checkbox-label">
+                    <input type="checkbox" id="notify-push" checked>
+                    Habilitar Notificaciones Push en Panel
+                  </label>
+                </div>
+                <button type="submit" class="button" style="margin-top: 1rem;">Guardar Preferencias de Canal</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECCIÓN: AUDITORÍA -->
+        <div id="section-auditoria" class="section-content hidden">
+          <div class="toolbar card">
+            <div class="search-filters-grid">
+              <input type="text" id="auditoria-search" placeholder="Filtrar por usuario o acción...">
+              <select id="auditoria-filter-type">
+                <option value="">Todos los tipos</option>
+                <option value="cambio">Cambios en el sistema</option>
+                <option value="acceso">Intentos de acceso</option>
+              </select>
+            </div>
+            <button class="button button-secondary" id="btn-export-audit">Exportar Reporte de Auditoría</button>
+          </div>
+
+          <div class="grid grid-2">
+            <div class="card">
+              <h3>Historial de Cambios</h3>
+              <ul class="log-list" id="fullChangeLog">
+                <!-- JS inserta registros -->
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Registro de Accesos</h3>
+              <ul class="log-list" id="fullAccessLog">
+                <!-- JS inserta registros -->
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </section>
     </div>
-
-    <!-- Pestaña de Usuarios -->
-    <section id="usuarios-tab" class="tab-content">
-      <div class="toolbar card">
-        <div class="search-filters">
-          <div class="input-group">
-            <label for="searchQuery" class="visually-hidden">Buscar usuario</label>
-            <input type="text" id="searchQuery" placeholder="Buscar por nombre o usuario...">
-          </div>
-          <div class="input-group">
-            <label for="filterRole" class="visually-hidden">Rol</label>
-            <select id="filterRole">
-              <option value="">Todos los roles</option>
-              <option value="administrador">Administrador</option>
-              <option value="docente">Docente</option>
-              <option value="estudiante">Estudiante</option>
-              <option value="encargado">Encargado / Familia</option>
-            </select>
-          </div>
-          <div class="input-group">
-            <label for="filterStatus" class="visually-hidden">Estado</label>
-            <select id="filterStatus">
-              <option value="">Todos los estados</option>
-              <option value="activo">Activo</option>
-              <option value="inactivo">Inactivo</option>
-            </select>
-          </div>
-        </div>
-        <button id="btnNewUser" class="button">Nuevo Usuario</button>
-      </div>
-
-      <div class="table-container card">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Usuario</th>
-              <th>Rol</th>
-              <th>Detalles / Asignación</th>
-              <th>Estado</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="userTableBody">
-            <!-- Cargado por JS -->
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- Pestaña de Auditoría -->
-    <section id="auditoria-tab" class="tab-content hidden">
-      <div class="grid-2">
-        <div class="card">
-          <h3>Historial de Cambios</h3>
-          <ul class="log-list" id="changeLog">
-            <!-- Cargado por JS -->
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Registro de Accesos</h3>
-          <ul class="log-list" id="accessLog">
-            <!-- Cargado por JS -->
-          </ul>
-        </div>
-      </div>
-    </section>
   </main>
 
-  <!-- Modal Formulario de Registro / Edición -->
+  <!-- MODAL: REGISTRAR / EDITAR USUARIO -->
   <div id="userModal" class="modal hidden">
     <div class="modal-content card">
       <div class="modal-header">
@@ -104,32 +403,35 @@
         <button id="closeModal" class="close-btn">&times;</button>
       </div>
       <form id="userForm">
-        <input type="hidden" id="userId" name="id">
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="fullName">Nombre Completo</label>
-            <input type="text" id="fullName" name="fullName" required placeholder="Juan Pérez">
-          </div>
-          <div class="form-group">
-            <label for="username">Usuario</label>
-            <input type="text" id="newUsername" name="username" required placeholder="jperez">
-          </div>
-          <div class="form-group">
-            <label for="email">Correo Electrónico</label>
-            <input type="email" id="email" name="email" required placeholder="juan.perez@escuela.com">
-          </div>
-          <div class="form-group">
-            <label for="userRole">Rol</label>
-            <select id="userRole" name="role" required>
-              <option value="estudiante">Estudiante</option>
-              <option value="docente">Docente</option>
-              <option value="encargado">Encargado / Familia</option>
-              <option value="administrador">Administrador</option>
-            </select>
-          </div>
-          <!-- Campos específicos dinámicos -->
-          <div id="dynamicFields" class="form-group span-2">
-            <!-- Insertado por JS dependiendo del rol -->
+        <div class="modal-body">
+          <input type="hidden" id="userId" name="id">
+          <input type="hidden" id="userRole" name="role">
+          
+          <div class="form-grid">
+            <div class="form-group" id="group-fullName">
+              <label for="fullName">Nombre Completo *</label>
+              <input type="text" id="fullName" name="fullName" placeholder="Ej: Juan Pérez">
+              <span class="error-text hidden" id="err-fullName"></span>
+            </div>
+            <div class="form-group" id="group-newUsername">
+              <label for="newUsername">Nombre de Usuario *</label>
+              <input type="text" id="newUsername" name="username" placeholder="Ej: jperez">
+              <span class="error-text hidden" id="err-newUsername"></span>
+            </div>
+            <div class="form-group" id="group-email">
+              <label for="email">Correo Electrónico *</label>
+              <input type="text" id="email" name="email" placeholder="Ej: juan.perez@escuela.com">
+              <span class="error-text hidden" id="err-email"></span>
+            </div>
+            <div class="form-group" id="group-profilePic">
+              <label for="profilePic">URL Foto de Perfil (Opcional)</label>
+              <input type="text" id="profilePic" name="profilePic" placeholder="https://ejemplo.com/foto.jpg">
+            </div>
+
+            <!-- Campos específicos inyectados -->
+            <div id="dynamicFieldsContainer" class="span-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;">
+              <!-- JS inyecta dinámicamente los campos basados en el rol -->
+            </div>
           </div>
         </div>
         <div class="modal-actions">
@@ -140,35 +442,52 @@
     </div>
   </div>
 
-  <!-- Modal Cambiar Contraseña -->
-  <div id="passwordModal" class="modal hidden">
+  <!-- MODAL: FICHA COMPLETA DE DETALLE -->
+  <div id="detailModal" class="modal hidden">
+    <div class="modal-content card">
+      <div class="modal-header">
+        <h2>Ficha de Información Completa</h2>
+        <button id="closeDetailModal" class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body" id="detailModalBody">
+        <!-- JS renderiza el perfil del usuario -->
+      </div>
+      <div class="modal-actions">
+        <button type="button" id="btn-close-detail" class="button button-secondary">Cerrar Ficha</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: IMPORTAR MASIVO -->
+  <div id="importModal" class="modal hidden">
     <div class="modal-content card max-w-sm">
       <div class="modal-header">
-        <h2>Cambiar Contraseña</h2>
-        <button id="closePasswordModal" class="close-btn">&times;</button>
+        <h2>Importar Estudiantes (CSV)</h2>
+        <button id="closeImportModal" class="close-btn">&times;</button>
       </div>
-      <form id="passwordForm">
-        <input type="hidden" id="passwordUserId" name="id">
-        <div class="form-group">
-          <label for="newPassword">Nueva Contraseña</label>
-          <input type="password" id="newPassword" name="newPassword" required placeholder="••••••••">
+      <div class="modal-body">
+        <p class="muted">Cargue un archivo CSV estructurado con las siguientes columnas:</p>
+        <p style="font-size: 0.8rem; font-family: monospace; background: var(--bg); padding: 0.5rem; border-radius: 6px;">
+          fullName,username,email,grado
+        </p>
+        <div class="form-group" style="margin-top: 1rem;">
+          <label for="csvFileInput">Seleccionar Archivo CSV</label>
+          <input type="file" id="csvFileInput" accept=".csv">
         </div>
-        <div class="form-group">
-          <label for="confirmPassword">Confirmar Contraseña</label>
-          <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="••••••••">
+        <div style="margin-top: 0.5rem;">
+          <a href="#" id="download-template-link" style="font-size: 0.85rem; color: var(--primary); font-weight: 700;">Descargar plantilla CSV de muestra</a>
         </div>
-        <p id="passwordError" class="form-message"></p>
-        <div class="modal-actions">
-          <button type="button" id="cancelPasswordForm" class="button button-secondary">Cancelar</button>
-          <button type="submit" class="button">Actualizar</button>
-        </div>
-      </form>
+      </div>
+      <div class="modal-actions">
+        <button type="button" id="btn-cancel-import" class="button button-secondary">Cancelar</button>
+        <button type="button" id="btn-submit-import" class="button">Importar Datos</button>
+      </div>
     </div>
   </div>
 
   <footer class="site-footer">
     <div class="container">
-      <p>Proyecto final · Intranet Escolar · Panel de Control de Usuarios.</p>
+      <p>Proyecto final · Intranet Escolar · Módulo Avanzado de Gestión de Usuarios.</p>
     </div>
   </footer>
 

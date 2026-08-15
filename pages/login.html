@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Prototipo de intranet escolar para una institución pública">
-  <title>Intranet Escolar</title>
-  <link rel="stylesheet" href="../src/styles/index.css">
+  <meta name="description"
+    content="Acceso al sistema de intranet del centro educativo por rol: Administración, Docente, Estudiante o Familia.">
+  <title>Intranet Escolar — Acceso</title>
+  <link rel="stylesheet" href="../src/styles/login.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
-  <header class="site-header">
+  <a href="../pages/login.html" class="back-link">
+    <i class="fas fa-arrow-left"></i> Volver al inicio
+  </a>
+  <header class="site-header" role="banner">
     <div class="container header-content">
       <div>
-        <p class="eyebrow">Institución educativa</p>
+        <p class="eyebrow">Institución Educativa</p>
         <h1>Intranet Escolar</h1>
       </div>
       <nav aria-label="Navegación principal">
@@ -101,6 +108,7 @@
     </div>
   </footer>
 
-  <script src="../src/js/index.js"></script>
+  <script src="../src/js/login.js"></script>
 </body>
+
 </html>
