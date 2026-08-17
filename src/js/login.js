@@ -178,7 +178,7 @@ loginForm?.addEventListener('submit', async (event) => {
     const session = {
       username:  result.user.username,
       fullName:  result.user.fullName,
-      role:      result.user.role,   // rol real del sistema, no el del selector
+      role:      roleHint,           // rol normalizado usado por dashboard y módulos
       expiresAt: Date.now() + SESSION_DURATION_MS
     };
 
@@ -212,6 +212,15 @@ loginForm?.addEventListener('submit', async (event) => {
 // FUNCIONES DE AUTENTICACIÓN (contra localStorage compartido con usuarios.js)
 // ==========================================================================
 
+// Los nombres visibles del selector deben coincidir con los roles internos
+// usados por usuarios.js. Esto evita que "Administración" se compare con
+// "administrador" y que "Docente" se compare con "profesor".
+const ROLE_MAP = {
+  administracion: 'administrador',
+  docente: 'profesor',
+  estudiante: 'estudiante'
+};
+
 /**
  * Autentica un usuario contra el registro de usuarios del sistema.
  * La contraseña en prototipo se almacena/verifica en texto plano.
@@ -231,6 +240,16 @@ function authenticate(username, password, roleHint) {
       success: false,
       reason:  'Credenciales incorrectas',
       message: 'Usuario o contraseña incorrectos. Verifica tus datos e intenta de nuevo.'
+    };
+  }
+
+  // Verificar que el rol seleccionado corresponda al rol real de la cuenta.
+  const expectedRole = ROLE_MAP[roleHint];
+  if (!expectedRole || user.role !== expectedRole) {
+    return {
+      success: false,
+      reason: 'Rol incorrecto',
+      message: 'El rol seleccionado no corresponde a esta cuenta.'
     };
   }
 
@@ -324,9 +343,9 @@ function logAccess(username, status) {
 // ── Helpers de UI ──────────────────────────────────────────────────────────
 
 function setLoading(isLoading) {
-  loginBtn.disabled = isLoading;
-  btnText.classList.toggle('hidden', isLoading);
-  btnLoading.classList.toggle('hidden', !isLoading);
+  if (loginBtn) loginBtn.disabled = isLoading;
+  if (btnText) btnText.classList.toggle('hidden', isLoading);
+  if (btnLoading) btnLoading.classList.toggle('hidden', !isLoading);
 }
 
 function setMessage(el, text, type) {

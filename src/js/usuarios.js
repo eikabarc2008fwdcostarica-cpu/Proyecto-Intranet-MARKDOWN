@@ -5,7 +5,7 @@
 // 1. VERIFICACIÓN DE SESIÓN
 const session = JSON.parse(localStorage.getItem('intranetSession') || 'null');
 if (!session) {
-  window.location.href = 'index.html';
+  window.location.href = 'login.html';
 } else if (session.role !== 'administracion') {
   window.location.href = 'dashboard.html';
 }
